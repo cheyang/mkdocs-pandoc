@@ -1,5 +1,4 @@
 FROM ubuntu:14.04
-MAINTAINER Viktor Petersson <vpetersson@wireload.net>
 
 # Set the env variables to non-interactive
 ENV DEBIAN_FRONTEND noninteractive
@@ -17,6 +16,11 @@ RUN wget https://github.com/jgm/pandoc/releases/download/1.13.2/pandoc-1.13.2-1-
     apt-get clean
 
 ADD run_doc.sh /usr/local/bin
+
+RUN \
+  apt-get update && \
+  apt-get install -y python python-dev python-pip python-virtualenv && \
+  apt-get clean
 
 RUN chmod u+x /usr/local/bin/run_doc.sh && \
     pip install mkdocs-pandoc
